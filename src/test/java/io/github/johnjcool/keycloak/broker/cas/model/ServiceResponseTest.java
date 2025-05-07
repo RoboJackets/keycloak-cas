@@ -132,7 +132,7 @@ public class ServiceResponseTest {
                               Charset.defaultCharset()
                                   .encode(
                                       CharBuffer.wrap(
-                                          """
+"""
 <cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
     <cas:authenticationSuccess>
         <cas:user>test</cas:user>
@@ -150,7 +150,7 @@ public class ServiceResponseTest {
                               Charset.defaultCharset()
                                   .encode(
                                       CharBuffer.wrap(
-                                          """
+"""
 <cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
     <cas:authenticationSuccess>
         <cas:user>test</cas:user>
@@ -181,7 +181,7 @@ public class ServiceResponseTest {
                               Charset.defaultCharset()
                                   .encode(
                                       CharBuffer.wrap(
-                                          """
+"""
 <cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
     <cas:authenticationSuccess>
         <cas:user>test</cas:user>
