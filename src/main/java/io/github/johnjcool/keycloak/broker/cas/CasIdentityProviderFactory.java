@@ -37,24 +37,30 @@ public class CasIdentityProviderFactory extends AbstractIdentityProviderFactory<
   @Override
   public List<ProviderConfigProperty> getConfigProperties() {
     return ProviderConfigurationBuilder.create()
-        .property()
+      .property()
         .name("casServerUrlPrefix")
         .type(ProviderConfigProperty.STRING_TYPE)
         .label("CAS server URL prefix")
         .helpText("The start of the CAS server URL, i.e. https://localhost:8443/cas")
         .add()
-        .property()
+      .property()
         .name("renew")
         .type(ProviderConfigProperty.BOOLEAN_TYPE)
         .label("CAS renew")
         .helpText("Force users to reauthenticate.")
         .add()
-        .property()
+      .property()
         .name("gateway")
         .type(ProviderConfigProperty.BOOLEAN_TYPE)
         .label("CAS gateway")
         .helpText("Do not force users to authenticate if they are not already authenticated.")
         .add()
-        .build();
+      .property()
+        .name("backchannellogout")
+        .type(ProviderConfigProperty.BOOLEAN_TYPE)
+        .label("Backchannel Logout")
+        .helpText("Should the user also be logged out of CAS when they log out of keycloak?")
+        .add()
+      .build();
   }
 }
