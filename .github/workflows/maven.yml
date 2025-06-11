@@ -52,8 +52,7 @@ jobs:
     - name: Upload JAR to GitHub
       uses: actions/upload-artifact@v4
       with:
-        name: keycloak-cas.jar
-        path: /home/runner/work/keycloak-cas/keycloak-cas/target/keycloak-cas-services-*-SNAPSHOT.jar
+        path: target/keycloak-cas-services-*-SNAPSHOT.jar
         if-no-files-found: error
         compression-level: 0
 
