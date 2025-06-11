@@ -1,0 +1,13 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "fmt-maven-plugin",
+      "pattern": [
+        {
+          "regexp": "^Non complying file: \\/home\\/runner\\/work\\/keycloak-cas\\/keycloak-cas\\/([a-zA-Z0-9-\\.\\/]+)$",
+          "file": 1
+        }
+      ]
+    }
+  ]
+}
