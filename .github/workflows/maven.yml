@@ -23,6 +23,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Register problem matchers
+      run: echo "::add-matcher::.github/matchers.json"
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
