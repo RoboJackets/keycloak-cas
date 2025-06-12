@@ -56,9 +56,9 @@ public class CasIdentityProviderFactory extends AbstractIdentityProviderFactory<
         .helpText("Do not force users to authenticate if they are not already authenticated.")
         .add()
         .property()
-        .name("backchannellogout")
+        .name("redirectToCasServerAfterLogout")
         .type(ProviderConfigProperty.BOOLEAN_TYPE)
-        .label("Backchannel Logout")
+        .label("CAS Logout")
         .helpText("Should the user also be logged out of CAS when they log out of keycloak?")
         .add()
         .build();

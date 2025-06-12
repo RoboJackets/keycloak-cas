@@ -89,7 +89,7 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
       return ErrorPage.error(
         session, null, Response.Status.INTERNAL_SERVER_ERROR, "CAS KC Logout Failed");
     }
-    if(config.isBackchannelLogout()){
+    if(config.isCasLogout()){
       return Response.status(302)
         .location(createLogoutUrl(getConfig(), realm, uriInfo).build())
         .build();

@@ -44,12 +44,12 @@ public class CasIdentityProviderConfig extends IdentityProviderModel {
     return Boolean.parseBoolean(getConfig().get("renew"));
   }
 
-  public void setBackchannelLogout(final boolean backchannelLogout) {
-    getConfig().put("backchannellogout", String.valueOf(backchannelLogout));
+  public void setCasLogout(final boolean casLogout) {
+    getConfig().put("redirectToCasServerAfterLogout", String.valueOf(casLogout));
   }
 
-  public boolean isBackchannelLogout() {
-    return Boolean.parseBoolean(getConfig().get("backchannellogout"));
+  public boolean isCasLogout() {
+    return Boolean.parseBoolean(getConfig().get("redirectToCasServerAfterLogout"));
   }
 
   public String getCasServerLoginUrl() {
