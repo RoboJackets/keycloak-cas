@@ -59,7 +59,7 @@ public class CasIdentityProviderFactory extends AbstractIdentityProviderFactory<
         .name("redirectToCasServerAfterLogout")
         .type(ProviderConfigProperty.BOOLEAN_TYPE)
         .label("CAS Logout")
-        .helpText("Should the user also be logged out of CAS when they log out of keycloak?")
+        .helpText("Should the user also be logged out of CAS when they log out of Keycloak?")
         .add()
         .build();
   }
