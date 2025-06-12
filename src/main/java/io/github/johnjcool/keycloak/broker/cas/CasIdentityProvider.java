@@ -87,7 +87,7 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
       event.event(EventType.LOGOUT);
       event.error(Errors.USER_SESSION_NOT_FOUND);
       return ErrorPage.error(
-        session, null, Response.Status.BAD_REQUEST, "CAS KC Logout Failed");
+        session, null, Response.Status.INTERNAL_SERVER_ERROR, "CAS KC Logout Failed");
     }
     if(config.isBackchannelLogout()){
       return Response.status(302)
