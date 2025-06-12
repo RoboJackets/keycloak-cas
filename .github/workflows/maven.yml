@@ -2,7 +2,12 @@
 name: Maven
 
 on:
-- push
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
 
 jobs:
   build:
@@ -18,6 +23,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Register problem matchers
+      run: echo "::add-matcher::.github/matchers.json"
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
@@ -32,6 +40,8 @@ jobs:
         cache: maven
 
     - name: Get AWS credentials
+      id: get_aws_credentials
+      continue-on-error: true
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: us-east-1
@@ -40,7 +50,14 @@ jobs:
         role-duration-seconds: 900
 
     - name: Build with Maven
-      run: mvn -B clean com.spotify.fmt:fmt-maven-plugin:check package deploy
+      run: mvn -B clean com.spotify.fmt:fmt-maven-plugin:check package ${{ steps.get_aws_credentials.outcome == 'success' && 'deploy' || '' }}
+
+    - name: Upload JAR to GitHub
+      uses: actions/upload-artifact@v4
+      with:
+        path: target/keycloak-cas-services-*-SNAPSHOT.jar
+        if-no-files-found: error
+        compression-level: 0
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
