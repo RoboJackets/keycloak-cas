@@ -79,24 +79,24 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
       final UriInfo uriInfo,
       final RealmModel realm) {
     CasIdentityProviderConfig config = getConfig();
-    Response res = AuthenticationManager.finishBrowserLogout(
-      session, realm, userSession, uriInfo, session.getContext().getConnection(), null);
+    Response res =
+        AuthenticationManager.finishBrowserLogout(
+            session, realm, userSession, uriInfo, session.getContext().getConnection(), null);
     if (res.getStatus() != 302) {
       logger.error("Failed to logout user session: " + userSession.getId());
       EventBuilder event = new EventBuilder(realm, session, session.getContext().getConnection());
       event.event(EventType.LOGOUT);
       event.error(Errors.USER_SESSION_NOT_FOUND);
       return ErrorPage.error(
-        session, null, Response.Status.INTERNAL_SERVER_ERROR, "CAS KC Logout Failed");
+          session, null, Response.Status.INTERNAL_SERVER_ERROR, "CAS KC Logout Failed");
     }
-    if(config.isCasLogout()){
+    if (config.isCasLogout()) {
       return Response.status(302)
-        .location(createLogoutUrl(getConfig(), realm, uriInfo).build())
-        .build();
+          .location(createLogoutUrl(getConfig(), realm, uriInfo).build())
+          .build();
     }
     return res;
   }
-
 
   @Override
   public Response retrieveToken(
