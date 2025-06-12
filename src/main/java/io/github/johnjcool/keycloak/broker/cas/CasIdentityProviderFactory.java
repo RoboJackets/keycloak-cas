@@ -55,6 +55,12 @@ public class CasIdentityProviderFactory extends AbstractIdentityProviderFactory<
         .label("CAS gateway")
         .helpText("Do not force users to authenticate if they are not already authenticated.")
         .add()
+        .property()
+        .name("redirectToCasServerAfterLogout")
+        .type(ProviderConfigProperty.BOOLEAN_TYPE)
+        .label("CAS Logout")
+        .helpText("Should the user also be logged out of CAS when they log out of keycloak?")
+        .add()
         .build();
   }
 }

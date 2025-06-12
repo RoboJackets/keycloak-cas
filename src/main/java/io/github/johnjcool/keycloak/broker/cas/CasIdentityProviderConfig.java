@@ -44,6 +44,14 @@ public class CasIdentityProviderConfig extends IdentityProviderModel {
     return Boolean.parseBoolean(getConfig().get("renew"));
   }
 
+  public void setCasLogout(final boolean casLogout) {
+    getConfig().put("redirectToCasServerAfterLogout", String.valueOf(casLogout));
+  }
+
+  public boolean isCasLogout() {
+    return Boolean.parseBoolean(getConfig().get("redirectToCasServerAfterLogout"));
+  }
+
   public String getCasServerLoginUrl() {
     return String.format("%s/%s", getConfig().get("casServerUrlPrefix"), DEFAULT_CAS_LOGIN_SUFFIX);
   }
