@@ -53,7 +53,7 @@ jobs:
       run: mvn -B clean com.spotify.fmt:fmt-maven-plugin:check package ${{ steps.get_aws_credentials.outcome == 'success' && 'deploy' || '' }}
 
     - name: Upload JAR to GitHub
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         path: target/keycloak-cas-services-*-SNAPSHOT.jar
         if-no-files-found: error
