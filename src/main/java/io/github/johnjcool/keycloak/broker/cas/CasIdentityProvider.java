@@ -106,9 +106,7 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
 
   @Override
   public Endpoint callback(
-      final RealmModel realm,
-      final org.keycloak.broker.provider.IdentityProvider.AuthenticationCallback callback,
-      final EventBuilder event) {
+      final RealmModel realm, final AuthenticationCallback callback, final EventBuilder event) {
     return new Endpoint(callback, realm, this);
   }
 
