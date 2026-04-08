@@ -108,6 +108,6 @@ public class AttributeToRoleMapper extends AbstractAttributeMapper {
 
   @Override
   public String getHelpText() {
-    return "If a attribute exists, grant the user the specified realm or application role.";
+    return "If an attribute exists, grant the user the specified realm or application role.";
   }
 }
