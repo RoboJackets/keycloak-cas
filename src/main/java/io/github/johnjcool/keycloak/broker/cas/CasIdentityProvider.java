@@ -30,6 +30,7 @@ import org.keycloak.events.EventType;
 import org.keycloak.models.FederatedIdentityModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserModel;
 import org.keycloak.models.UserSessionModel;
 import org.keycloak.services.ErrorPage;
 import org.keycloak.services.managers.AuthenticationManager;
@@ -102,6 +103,15 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
   public Response retrieveToken(
       final KeycloakSession session, final FederatedIdentityModel identity) {
     return Response.ok(identity.getToken()).type(MediaType.APPLICATION_JSON).build();
+  }
+
+  @Override
+  public Response retrieveToken(
+      final KeycloakSession session,
+      final FederatedIdentityModel identity,
+      final UserSessionModel userSession,
+      final UserModel user) {
+    return retrieveToken(session, identity);
   }
 
   @Override
