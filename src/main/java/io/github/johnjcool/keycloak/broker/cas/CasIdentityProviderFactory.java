@@ -40,7 +40,7 @@ public class CasIdentityProviderFactory
         .name("casServerUrlPrefix")
         .type(ProviderConfigProperty.STRING_TYPE)
         .label("CAS server URL prefix")
-        .helpText("The start of the CAS server URL, i.e. https://localhost:8443/cas")
+        .helpText("The start of the CAS server URL, e.g. https://localhost:8443/cas")
         .add()
         .property()
         .name("renew")
