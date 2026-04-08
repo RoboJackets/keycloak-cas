@@ -151,12 +151,20 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
       if (ticket == null || ticket.isBlank()) {
         logger.error("CAS callback missing ticket parameter");
         return ErrorPage.error(
-            session, null, Response.Status.BAD_REQUEST, Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
+            session,
+            null,
+            Response.Status.BAD_REQUEST,
+            Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
       }
-      if (stateCookie == null || stateCookie.getValue() == null || stateCookie.getValue().isBlank()) {
+      if (stateCookie == null
+          || stateCookie.getValue() == null
+          || stateCookie.getValue().isBlank()) {
         logger.error("CAS callback missing or empty state cookie");
         return ErrorPage.error(
-            session, null, Response.Status.BAD_REQUEST, Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
+            session,
+            null,
+            Response.Status.BAD_REQUEST,
+            Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
       }
       return callback.authenticated(
           getFederatedIdentity(
