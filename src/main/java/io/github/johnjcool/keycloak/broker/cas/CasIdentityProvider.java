@@ -148,6 +148,16 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
     public Response authResponse(
         @QueryParam(PROVIDER_PARAMETER_TICKET) final String ticket,
         @CookieParam(STATE_COOKIE_NAME) final Cookie stateCookie) {
+      if (ticket == null || ticket.isBlank()) {
+        logger.error("CAS callback missing ticket parameter");
+        return ErrorPage.error(
+            session, null, Response.Status.BAD_REQUEST, Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
+      }
+      if (stateCookie == null || stateCookie.getValue() == null || stateCookie.getValue().isBlank()) {
+        logger.error("CAS callback missing or empty state cookie");
+        return ErrorPage.error(
+            session, null, Response.Status.BAD_REQUEST, Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
+      }
       return callback.authenticated(
           getFederatedIdentity(
               config, ticket, session.getContext().getUri(), stateCookie.getValue()));
