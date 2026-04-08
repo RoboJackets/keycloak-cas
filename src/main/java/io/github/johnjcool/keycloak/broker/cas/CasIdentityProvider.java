@@ -22,7 +22,8 @@ import org.keycloak.broker.provider.AbstractIdentityProvider;
 import org.keycloak.broker.provider.AuthenticationRequest;
 import org.keycloak.broker.provider.BrokeredIdentityContext;
 import org.keycloak.broker.provider.IdentityBrokerException;
-import org.keycloak.broker.provider.util.SimpleHttp;
+import org.keycloak.http.simple.SimpleHttp;
+import org.keycloak.http.simple.SimpleHttpResponse;
 import org.keycloak.common.ClientConnection;
 import org.keycloak.events.Errors;
 import org.keycloak.events.EventBuilder;
@@ -185,10 +186,10 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
         final UriInfo uriInfo,
         final String state) {
       logger.debug("Current state value: " + state);
-      try (SimpleHttp.Response response =
-          SimpleHttp.doGet(
-                  createValidateServiceUrl(config, ticket, uriInfo).build().toURL().toString(),
-                  session)
+      try (SimpleHttpResponse response =
+          SimpleHttp.create(session)
+              .doGet(
+                  createValidateServiceUrl(config, ticket, uriInfo).build().toURL().toString())
               .asResponse()) {
         if (response.getStatus() != 200) {
           logger.error(response.asString());

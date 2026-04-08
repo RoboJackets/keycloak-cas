@@ -81,7 +81,7 @@ public class AttributeToRoleMapper extends AbstractAttributeMapper {
       final BrokeredIdentityContext context) {
     String roleName = mapperModel.getConfig().get(ConfigConstants.ROLE);
     if (hasAttributeValue(mapperModel, context)) {
-      RoleModel role = KeycloakModelUtils.getRoleFromString(realm, roleName);
+      RoleModel role = KeycloakModelUtils.getRoleFromString(session, realm, roleName);
       if (role == null) {
         throw new IdentityBrokerException("Unable to find role: " + roleName);
       }
@@ -98,7 +98,7 @@ public class AttributeToRoleMapper extends AbstractAttributeMapper {
       final BrokeredIdentityContext context) {
     String roleName = mapperModel.getConfig().get(ConfigConstants.ROLE);
     if (!hasAttributeValue(mapperModel, context)) {
-      RoleModel role = KeycloakModelUtils.getRoleFromString(realm, roleName);
+      RoleModel role = KeycloakModelUtils.getRoleFromString(session, realm, roleName);
       if (role == null) {
         throw new IdentityBrokerException("Unable to find role: " + roleName);
       }
