@@ -70,6 +70,7 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
+                .sameSite(NewCookie.SameSite.LAX)
                 .build())
         .build();
   }
