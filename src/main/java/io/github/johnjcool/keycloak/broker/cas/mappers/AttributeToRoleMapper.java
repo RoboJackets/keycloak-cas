@@ -79,13 +79,8 @@ public class AttributeToRoleMapper extends AbstractAttributeMapper {
       final UserModel user,
       final IdentityProviderMapperModel mapperModel,
       final BrokeredIdentityContext context) {
-    String roleName = mapperModel.getConfig().get(ConfigConstants.ROLE);
     if (hasAttributeValue(mapperModel, context)) {
-      RoleModel role = KeycloakModelUtils.getRoleFromString(session, realm, roleName);
-      if (role == null) {
-        throw new IdentityBrokerException("Unable to find role: " + roleName);
-      }
-      user.grantRole(role);
+      user.grantRole(getRole(session, realm, mapperModel));
     }
   }
 
@@ -96,14 +91,21 @@ public class AttributeToRoleMapper extends AbstractAttributeMapper {
       final UserModel user,
       final IdentityProviderMapperModel mapperModel,
       final BrokeredIdentityContext context) {
-    String roleName = mapperModel.getConfig().get(ConfigConstants.ROLE);
     if (!hasAttributeValue(mapperModel, context)) {
-      RoleModel role = KeycloakModelUtils.getRoleFromString(session, realm, roleName);
-      if (role == null) {
-        throw new IdentityBrokerException("Unable to find role: " + roleName);
-      }
-      user.deleteRoleMapping(role);
+      user.deleteRoleMapping(getRole(session, realm, mapperModel));
     }
+  }
+
+  private RoleModel getRole(
+      final KeycloakSession session,
+      final RealmModel realm,
+      final IdentityProviderMapperModel mapperModel) {
+    String roleName = mapperModel.getConfig().get(ConfigConstants.ROLE);
+    RoleModel role = KeycloakModelUtils.getRoleFromString(session, realm, roleName);
+    if (role == null) {
+      throw new IdentityBrokerException("Unable to find role: " + roleName);
+    }
+    return role;
   }
 
   @Override
