@@ -16,5 +16,13 @@
             "depNameTemplate": "org.keycloak:keycloak-parent",
             "datasourceTemplate": "maven"
         }
+    ],
+    "packageRules": [
+        {
+            "matchManagers": [
+                "github-actions"
+            ],
+            "rangeStrategy": "replace"
+        }
     ]
 }
