@@ -1,17 +1,19 @@
 {
     "extends": [
-        "config:base"
+        "config:recommended"
     ],
     "prConcurrentLimit": 1,
     "prHourlyLimit": 0,
-    "rebaseStalePrs": true,
+    "rebaseWhen": "behind-base-branch",
     "automerge": true,
     "platformAutomerge": true,
     "rangeStrategy": "pin",
     "customManagers": [
         {
             "customType": "regex",
-            "fileMatch": ["^pom.xml$"],
+            "managerFilePatterns": [
+                "/^pom.xml$/"
+            ],
             "matchStrings": ["<keycloak\\.version>(?<currentValue>.+)<\\/keycloak\\.version>"],
             "depNameTemplate": "org.keycloak:keycloak-parent",
             "datasourceTemplate": "maven"
