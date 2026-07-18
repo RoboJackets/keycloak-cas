@@ -17,6 +17,9 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.jboss.logging.Logger;
 import org.keycloak.broker.provider.AbstractIdentityProvider;
 import org.keycloak.broker.provider.AuthenticationRequest;
@@ -120,6 +123,38 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
   public Endpoint callback(
       final RealmModel realm, final AuthenticationCallback callback, final EventBuilder event) {
     return new Endpoint(callback, realm, this);
+  }
+
+  /**
+   * Enforces Keycloak's common "Verify essential claim" IdP setting against CAS attributes. Mirrors
+   * OIDCIdentityProvider: claim name must be present and at least one value must match the
+   * configured regex.
+   */
+  static void validateEssentialClaim(
+      final CasIdentityProviderConfig config, final Map<String, List<String>> attributes) {
+    if (!config.isFilteredByClaims()) {
+      return;
+    }
+
+    String filterName = config.getClaimFilterName();
+    String filterValue = config.getClaimFilterValue();
+    Map<String, List<String>> attrs = attributes != null ? attributes : Collections.emptyMap();
+    List<String> claimValues = attrs.get(filterName);
+
+    if (claimValues == null || claimValues.isEmpty()) {
+      logger.debugf("Claim %s was not found", filterName);
+      throw new IdentityBrokerException(String.format("Claim %s not found", filterName))
+          .withMessageCode(Messages.IDENTITY_PROVIDER_UNMATCHED_ESSENTIAL_CLAIM_ERROR);
+    }
+
+    logger.tracef("Found claim %s with values %s", filterName, claimValues);
+    if (claimValues.stream().noneMatch(v -> v != null && v.matches(filterValue))) {
+      logger.warnf(
+          "Claim %s has values \"%s\" that does not match the expected filter \"%s\"",
+          filterName, claimValues, filterValue);
+      throw new IdentityBrokerException(String.format("Unmatched claim value for %s.", filterName))
+          .withMessageCode(Messages.IDENTITY_PROVIDER_UNMATCHED_ESSENTIAL_CLAIM_ERROR);
+    }
   }
 
   public static final class Endpoint {
@@ -235,6 +270,7 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
                   + ")");
         }
         Success success = serviceResponse.getSuccess();
+        validateEssentialClaim(config, success.getAttributes());
 
         BrokeredIdentityContext user = new BrokeredIdentityContext(success.getUser(), config);
         user.setUsername(success.getUser());
