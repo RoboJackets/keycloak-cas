@@ -201,9 +201,17 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
             Response.Status.BAD_REQUEST,
             Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR);
       }
-      return callback.authenticated(
-          getFederatedIdentity(
-              config, ticket, session.getContext().getUri(), stateCookie.getValue()));
+      try {
+        return callback.authenticated(
+            getFederatedIdentity(
+                config, ticket, session.getContext().getUri(), stateCookie.getValue()));
+      } catch (IdentityBrokerException e) {
+        String messageCode =
+            e.getMessageCode() != null
+                ? e.getMessageCode()
+                : Messages.IDENTITY_PROVIDER_UNEXPECTED_ERROR;
+        return ErrorPage.error(session, null, Response.Status.BAD_GATEWAY, messageCode);
+      }
     }
 
     @GET
