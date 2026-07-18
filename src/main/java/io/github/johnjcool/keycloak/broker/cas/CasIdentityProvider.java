@@ -174,7 +174,7 @@ public class CasIdentityProvider extends AbstractIdentityProvider<CasIdentityPro
       this.realm = realm;
       this.provider = provider;
       this.session = provider.session;
-      this.headers = session.getContext().getRequestHeaders();
+      this.headers = session.getContext().getHttpRequest().getHttpHeaders();
       this.clientConnection = session.getContext().getConnection();
       this.config = provider.getConfig();
     }
